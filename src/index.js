@@ -1,28 +1,45 @@
-let darkMode = true;
+let darkMode = localStorage.getItem("darkMode") === "true";
 const app = document.querySelector("#html");
 
+if (darkMode) {
+  app.classList.add("dark");
+}
+
 const changeDarkMode = () => {
-  darkMode = !darkMode
+  darkMode = !darkMode;
+
   if (darkMode) {
     app.classList.add("dark");
   } else {
     app.classList.remove("dark");
   }
+
+  localStorage.setItem("darkMode", darkMode);
 };
 
-let showMenu = false;
-const mobileMenu = document.querySelector("#mobile-menu");
 
-const handleMenuShow = () => {
-  showMenu = !showMenu
-  if (showMenu) {
-    mobileMenu.classList.add("block");
-    mobileMenu.classList.remove("hidden");
+function handleMenuShow() {
+  const menu = document.getElementById("mobile-menu");
+  const openIcon = document.querySelector(".menu-open-icon");
+  const closeIcon = document.querySelector(".menu-close-icon");
+
+  if (menu.classList.contains("translate-y-0")) {
+    menu.classList.add("hidden");
+    menu.classList.remove("block");
+    menu.classList.remove("translate-y-0", "opacity-100");
+    menu.classList.add("-translate-y-full", "opacity-0");
+    openIcon.classList.remove("hidden");
+    closeIcon.classList.add("hidden");
   } else {
-    mobileMenu.classList.add("hidden");
-    mobileMenu.classList.remove("block");    
+    menu.classList.add("block");
+    menu.classList.remove("hidden");
+    menu.classList.remove("-translate-y-full", "opacity-0");
+    menu.classList.add("translate-y-0", "opacity-100");
+    openIcon.classList.add("hidden");
+    closeIcon.classList.remove("hidden");
   }
 }
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
